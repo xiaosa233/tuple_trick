@@ -25,12 +25,11 @@ FILE(GLOB tuple_trick_BUILD_TARGET_FILE_GROUP ${SOURCE_DIR}/tuple_trick/build.py
 source_group("sources" FILES ${tuple_trick})
 add_library(tuple_trick STATIC ${tuple_trick}  ${tuple_trick_BUILD_TARGET_FILE_GROUP} )
 target_include_directories(tuple_trick 
- PUBLIC ${PROJECT_DIR}/third_parties/googletest/include PUBLIC ${SOURCE_DIR}/tuple_trick)
-target_link_libraries(tuple_trick  optimized ${PROJECT_DIR}/third_parties/googletest/lib/linux/Release/libgtest.a
- optimized ${PROJECT_DIR}/third_parties/googletest/lib/linux/Release/libgtest_main.a
- debug ${PROJECT_DIR}/third_parties/googletest/lib/linux/Debug/libgtest_main.a
- debug ${PROJECT_DIR}/third_parties/googletest/lib/linux/Debug/libgtest.a
- general pthread
+ PUBLIC ${SOURCE_DIR}/tuple_trick PUBLIC ${PROJECT_DIR}/third_parties/googletest/include)
+target_link_libraries(tuple_trick  optimized ${PROJECT_DIR}/third_parties/googletest/lib/windows/Release/gtest.lib
+ optimized ${PROJECT_DIR}/third_parties/googletest/lib/windows/Release/gtest_main.lib
+ debug ${PROJECT_DIR}/third_parties/googletest/lib/windows/Debug/gtest_main.lib
+ debug ${PROJECT_DIR}/third_parties/googletest/lib/windows/Debug/gtest.lib
 )
 set_target_properties(tuple_trick PROPERTIES LINKER_LANGUAGE CXX)
 
@@ -40,12 +39,11 @@ FILE(GLOB test_tuple_trick_tuple_trick ${SOURCE_DIR}/tuple_trick/tuple_trick_tes
 source_group("ut_file" FILES ${test_tuple_trick_tuple_trick})
 add_executable(test_tuple_trick_tuple_trick ${test_tuple_trick_tuple_trick} )
 target_include_directories(test_tuple_trick_tuple_trick 
- PUBLIC ${PROJECT_DIR}/third_parties/googletest/include PUBLIC ${SOURCE_DIR}/tuple_trick)
-target_link_libraries(test_tuple_trick_tuple_trick  optimized ${PROJECT_DIR}/third_parties/googletest/lib/linux/Release/libgtest.a
- optimized ${PROJECT_DIR}/third_parties/googletest/lib/linux/Release/libgtest_main.a
- debug ${PROJECT_DIR}/third_parties/googletest/lib/linux/Debug/libgtest_main.a
- debug ${PROJECT_DIR}/third_parties/googletest/lib/linux/Debug/libgtest.a
- general pthread
+ PUBLIC ${SOURCE_DIR}/tuple_trick PUBLIC ${PROJECT_DIR}/third_parties/googletest/include)
+target_link_libraries(test_tuple_trick_tuple_trick  optimized ${PROJECT_DIR}/third_parties/googletest/lib/windows/Release/gtest.lib
+ optimized ${PROJECT_DIR}/third_parties/googletest/lib/windows/Release/gtest_main.lib
+ debug ${PROJECT_DIR}/third_parties/googletest/lib/windows/Debug/gtest_main.lib
+ debug ${PROJECT_DIR}/third_parties/googletest/lib/windows/Debug/gtest.lib
 )
 set_target_properties(test_tuple_trick_tuple_trick PROPERTIES LINKER_LANGUAGE CXX)
 

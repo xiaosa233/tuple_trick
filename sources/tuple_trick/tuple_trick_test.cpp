@@ -30,11 +30,12 @@ using foreach_tag = std::integral_constant<size_t, 1>;
 template <size_t Index, class TupleT>
 struct TupleOperator {
   static_assert(std::is_same_v<TupleT, TupleType>, "Not same type!");
-  constexpr std::string_view operator()() const {
-    return std::tuple_element_t<Index, TupleT>::WidgetName();
-  }
+  using TupleElement =
+      std::tuple_element_t <
+      Index<std::tuple_size_v<TupleT> ? Index : std::tuple_size_v<TupleT> - 1, TupleT>;
+  constexpr std::string_view operator()() const { return TupleElement::WidgetName(); }
 
-  constexpr int operator()(int i) const { return std::tuple_element_t<Index, TupleT>::value + i; }
+  constexpr int operator()(int i) const { return TupleElement::value + i; }
 
   void operator()(void_operator_tag, bool* verify_value) {
     // Do nothing.
@@ -129,13 +130,13 @@ TEST(TupleTrickTest, ForEachOperation) {
     EXPECT_EQ("Second", names[1]);
   }
 
-  // {
-  //   auto tuple_value = std::make_tuple<int, size_t, double>(-1, 0, 1.0);
-  //   ForEachOperator<decltype(tuple_value), SelfIncreament>()(&tuple_value);
-  //   EXPECT_EQ(0, std::get<0>(tuple_value));
-  //   EXPECT_EQ(1, std::get<1>(tuple_value));
-  //   EXPECT_EQ(2.0, std::get<2>(tuple_value));
-  // }
+  {
+    auto tuple_value = std::make_tuple<int, size_t, double>(-1, 0, 1.0);
+    ForEachOperator<decltype(tuple_value), SelfIncreament>()(&tuple_value);
+    EXPECT_EQ(0, std::get<0>(tuple_value));
+    EXPECT_EQ(1, std::get<1>(tuple_value));
+    EXPECT_EQ(2.0, std::get<2>(tuple_value));
+  }
 }
 
 } // namespace tuple_trick
