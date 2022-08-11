@@ -63,7 +63,6 @@ struct FindIfOperator;
 template <class TupleT, template <size_t, class> class FuncOperator>
 struct ForEachOperator;
 
-
 // ---------------- Implementation for Operator -------------------------
 
 // return false always for Findif operator.
@@ -80,11 +79,13 @@ struct DummyFindAction {
 
 template <class TupleT, template <size_t, class> class FuncOperator>
 struct IndexOperator {
+  IndexOperator(int i) : index(i) {}
   template <class... Args>
-  constexpr decltype(auto) operator()(int i, Args&&... args) const {
-    return Worker<0, std::tuple_size_v<TupleT>, TupleT, DummyFindIf, FuncOperator>(i)(
+  constexpr decltype(auto) operator()(Args&&... args) const {
+    return Worker<0, std::tuple_size_v<TupleT>, TupleT, DummyFindIf, FuncOperator>(index)(
         std::forward<Args>(args)...);
   }
+  int index = 0;
 };
 
 template <class TupleT, template <size_t, class> class FindFunc,

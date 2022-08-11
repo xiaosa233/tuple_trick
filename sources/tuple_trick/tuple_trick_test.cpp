@@ -50,33 +50,33 @@ TEST(TupleTrickTest, IndexOperation) {
   // Test with no-parameter
   {
     const int i = 0;
-    const std::string_view res = IndexOperator<TupleType, TupleOperator>()(i);
+    const std::string_view res = IndexOperator<TupleType, TupleOperator>(i)();
     EXPECT_EQ("First", res);
   }
   {
-    const std::string_view res = IndexOperator<TupleType, TupleOperator>()(1);
+    const std::string_view res = IndexOperator<TupleType, TupleOperator>(1)();
     EXPECT_EQ("Second", res);
   }
 
   // Test with parameter
   {
-    const int value = IndexOperator<TupleType, TupleOperator>()(0, 2);
+    const int value = IndexOperator<TupleType, TupleOperator>(0)(2);
     EXPECT_EQ(2, value);
   }
   {
-    const int value = IndexOperator<TupleType, TupleOperator>()(1, 2);
+    const int value = IndexOperator<TupleType, TupleOperator>(1)(2);
     EXPECT_EQ(3, value);
   }
   {
     // Test with constexpr
-    constexpr int value = IndexOperator<TupleType, TupleOperator>()(0, 2);
+    constexpr int value = IndexOperator<TupleType, TupleOperator>(0)(2);
     EXPECT_EQ(2, value);
   }
 
   // Test void return
   {
     bool verify_call = false;
-    IndexOperator<TupleType, TupleOperator>()(0, void_operator_tag{}, &verify_call);
+    IndexOperator<TupleType, TupleOperator>(0)(void_operator_tag{}, &verify_call);
     EXPECT_TRUE(verify_call);
   }
 }
