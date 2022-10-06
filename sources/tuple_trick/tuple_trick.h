@@ -79,7 +79,7 @@ struct DummyFindAction {
 
 template <class TupleT, template <size_t, class> class FuncOperator>
 struct IndexOperator {
-  IndexOperator(int i) : index(i) {}
+  constexpr IndexOperator(int i) noexcept : index(i) {}
   template <class... Args>
   constexpr decltype(auto) operator()(Args&&... args) const {
     return Worker<0, std::tuple_size_v<TupleT>, TupleT, DummyFindIf, FuncOperator>(index)(
